@@ -1,0 +1,35 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Title{% endblock title %}</title>
+    {% block stylesheet %}{% endblock stylesheet %}
+  </head>
+  <body>
+    <main>
+    {% block content %}
+    {% endblock content %}
+    </main>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    {% block javascript %}
+        $('#id_username').change(function(){
+
+            $.ajax({
+                url:"/ajax/validate-username/",
+                // url: '{% url 'simple_ajax_validate' %}',
+
+                data: {
+                    'username': username
+                },
+                dataType: 'json',
+                sucess: function (data) {
+                    if (data.is_present) {
+                        alert("A user with this username already exists.");
+                    }
+                }
+            })
+        });
+    {% endblock javascript%}
+  </body>
+</html>
